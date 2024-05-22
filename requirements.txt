@@ -1,0 +1,17 @@
+langchain==0.1.16
+langchain-openai
+langchain-community
+duckduckgo-search
+bs4==0.0.1
+simsimd==3.6.3
+PyMuPDF==1.23.12
+tiktoken==0.5.2
+favicon==0.7.0
+arxiv==2.1.0
+tldextract==5.1.1
+supabase
+passlib
+python-jose
+fastapi
+uvicorn
+html2text
