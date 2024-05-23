@@ -1,4 +1,5 @@
 from fastapi import FastAPI, BackgroundTasks, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
@@ -7,16 +8,30 @@ import logging
 # import favicon
 import tldextract
 
-# Importing necessary functions
+# custom functions
 from utils.objects import SafePromptAsker, Expert, N_QUERIES, Queries, simple_ask
 from utils.prompts import auto_agent_instructions, search_queries_prompt, storytelling_instructions
 from utils.researcher.scraper import get_results, get_context_by_urls
 
-logging.basicConfig(level=logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)
 
 load_dotenv()
 
 app = FastAPI()
+
+# Configure CORS
+origins = [
+    "http://localhost:5173",  # local Vite frontend
+    "https://supreme-carnival.onrender.com/",  # prod
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Storage for process states
 process_states = {}
@@ -57,7 +72,7 @@ async def fetch_results_and_sources(queries):
         results = await get_results(query)
         sources += [website['href'] for website in results]
         msg_sources += f'## **{query.capitalize()}**\n'
-        msg_sources += '\n'.join([f' - [{website.get("title")}]({website.get("href")})' for website in results]) + '\n'
+        msg_sources += '\n'.join([f' - [{website["title"]}]({website["href"]})' for website in results]) + '\n'
     return msg_sources, sources
 
 async def generate_context(queries, main_query, sources):
