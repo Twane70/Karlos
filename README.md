@@ -1,4 +1,5 @@
 ## Setup
+create virtual env (Mac or Windows)
 
 .\venv\Scripts\activate
 conda deactivate
