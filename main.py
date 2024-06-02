@@ -72,7 +72,7 @@ async def fetch_results_and_sources(queries):
         results = await get_results(query)
         sources += [website['href'] for website in results]
         msg_sources += f'## **{query.capitalize()}**\n'
-        msg_sources += '\n'.join([f' - [{website["title"]}]({website["href"]})' for website in results]) + '\n'
+        msg_sources += '\n'.join([f' - [{website.get("title")}]({website["href"]})' for website in results]) + '\n'
     return msg_sources, sources
 
 async def generate_context(queries, main_query, sources):
@@ -135,6 +135,7 @@ async def run_process(task_id, main_query, lang):
         process_states[task_id]["steps"]["sources"] = "En cours"
         msg_sources, sources = await fetch_results_and_sources(queries)
         process_states[task_id]["steps"]["sources"] = msg_sources
+        print(msg_sources)
 
         process_states[task_id]["steps"]["context"] = "En cours"
         context = await generate_context(queries, main_query, sources)

@@ -55,7 +55,7 @@ class Scraper:
 
             if len(content) < 100:
                 return {'url': link, 'raw_content': None}
-            return {'url': link, 'title': link_dic['title'], 'raw_content': content}
+            return {'url': link, 'title': link_dic.get('title'), 'raw_content': content}
         except Exception as e:
             print(f"Error scraping {link}: {e}")
             return {'url': link, 'raw_content': None}
@@ -144,7 +144,7 @@ def scrape_urls(urls):
         if len(content) > 100:
             scrapped_websites.append({
                 'url': doc.metadata['source'], 
-                'title': doc.metadata['title'], 
+                'title': doc.metadata.get('title'), 
                 'raw_content': content,
             })
     return scrapped_websites

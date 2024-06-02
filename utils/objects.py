@@ -6,7 +6,7 @@ from langchain_core.exceptions import OutputParserException
 from pydantic import BaseModel, Field
 
 class Expert(BaseModel):
-    emoji: str = Field(..., description="Emoji of the agent's role.", max_length=1)
+    emoji: str = Field(..., description="Emoji of the agent's role.", max_length=6)
     name: str = Field(..., description="The agent's name, describing its function or role.")
     description: str = Field(..., description="The agent's complete behaviour description.")
 
