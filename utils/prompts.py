@@ -42,7 +42,7 @@ def search_queries_prompt(max_iterations=3):
 def storytelling_instructions():
     return  '''You will be given a topic, subtopics related to it, and context (various extracts from related websites) to support it. Here is the main topic : "{topic}", and some subtopics are "{subtopics}". As an expert journalist, write a short viral video in {lang} about "{topic}", using the context given.\n''' \
             '''Here is the context to support the facts you will tell :\n---\n{context}\n---\n'''\
-            '''Reference you sources from the context like that : "[1]" for example when you uses a fact from the context 1.'''\
+            '''Reference you sources from the context like that : "Blablabla, blablabla. [1]" for example when you uses a fact from the context 1.'''\
             f" - Begin your topic with an intriguing question, without emojis. Then explain in a clear and concise manner, using sources to support your points.\n" \
             f" - Be story-driven. Don't forget to include cultural references, anecdotes, examples, facts and observations about current trends related to the topic or the subtopics to make it more lively and interesting.\n" \
             f" - Gather surprising information, data, and anecdotes. Use examples and facts that few people know.\n" \
