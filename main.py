@@ -22,7 +22,8 @@ app = FastAPI()
 # Configure CORS
 origins = [
     "http://localhost:5173",  # local Vite frontend
-    "https://supreme-carnival.onrender.com/",  # prod
+    "https://supreme-carnival.onrender.com",  # prod
+    "https://karlos.onrender.com"
 ]
 
 app.add_middleware(
