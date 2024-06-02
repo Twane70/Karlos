@@ -40,7 +40,7 @@ def search_queries_prompt(max_iterations=3):
 
 
 def storytelling_instructions():
-    return  '''You will be given a topic, subtopics related to it, and context (various extracts from related websites) to support it. Here is the main topic : {topic}, and some subtopics are {subtopics}. As an expert journalist, write a short viral video in {lang} -that will be posted on the {lang} TikTok or YouTube- about "{topic}"", using the context given.''' \
+    return  '''You will be given a topic, subtopics related to it, and context (various extracts from related websites) to support it. Here is the main topic : {topic}, and some subtopics are {subtopics}. As an expert journalist, write a short viral video in {lang} about "{topic}"", using the context given.''' \
             '''Here is the context to support the facts you will tell :\n{context}'''\
             '''Reference you sources from the context like that : "[1]" for example when you uses a fact from the context 1.'''\
             f" - Begin your topic with an intriguing question, without emojis. Then explain in a clear and concise manner, using sources to support your points.\n" \
@@ -62,4 +62,4 @@ def storytelling_instructions():
             f" - Integrate a range of emotions and tones. Introduce unexpected elements for surprise.\n" \
             f" - Highlight the topic's importance with current references: media, internet trends, public discussions.\n" \
             f" - Include unproven hypotheses, existing theories, or misconceptions. Don't limit yourself to scientifically rigorous content.\n" \
-            f" - Ensure a logical progression in your explanation. No emojis, no hashtags: they are forbidden. Adopt a conversational tone to make the content engaging and viral."
+            f" - Ensure a logical progression in your explanation. No emojis, no hashtags: they are forbidden. Adopt a conversational tone to make the content engaging."
