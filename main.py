@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from datetime import datetime, timedelta
 import uuid
 import logging
-# import favicon
+import favicon
 import tldextract
 
 # custom functions
@@ -80,19 +80,27 @@ async def generate_context(queries, main_query, sources):
     context_chunks.sort(key=lambda chunk: chunk.get('source', 'None'))
     context = []
     for id_chunk, chunk in enumerate(context_chunks):
-        '''
-        try:
-            icons = favicon.get(chunk.get('source'))
-            icon = icons[0].url
-        except:
-            icon = './public/web.png'
-        '''
-        try:
-            name_author = tldextract.extract(chunk.get('source')).domain
-        except:
-            name_author = f'Source {id_chunk + 1}'
-        context.append(f"[{id_chunk}] {chunk.get('title')} | {name_author} \n [...] {chunk.get('content')} [...]\n---\n")
-    return list(set(context))
+        if chunk.get('content') not in [chunk['content'] for chunk in context]:
+            try:
+                icons = favicon.get(chunk.get('source'))
+                icon = icons[0].url
+            except:
+                icon = './public/web.png'
+            try:
+                name_author = tldextract.extract(chunk.get('source')).domain
+            except:
+                name_author = f'Source {id_chunk + 1}'
+            context.append({
+                'id': id_chunk + 1,
+                'title': chunk.get('title'),
+                'author': name_author,
+                'content': chunk.get('content'),
+                'source': chunk.get('source'),
+                'icon': icon
+            })
+            
+            # f"[{id_chunk + 1}] {chunk.get('title')} | {name_author} \n [...] {chunk.get('content')} [...]\n---\n"
+    return context
 
 async def generate_summary(main_query, queries, context, lang):
     return simple_ask(
@@ -100,7 +108,7 @@ async def generate_summary(main_query, queries, context, lang):
         parameters=['topic', 'subtopics', 'context', 'lang'],
         topic=main_query,
         subtopics=', '.join(queries),
-        context='\n'.join(context),
+        context='\n---\n'.join([f"[{chunk['id']}] | {chunk['author']}\n[...]{chunk['content']}[...]" for chunk in context]),
         lang=lang,
         model_version='gpt-4o'
     )
